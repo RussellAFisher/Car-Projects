@@ -17,6 +17,7 @@ Adafruit_GPS GPS(&mySerial);
 ////Galvanize                             |
   #define GEO_LAT                39.757784
   #define GEO_LON                -105.007224
+  
 //--------------------------------------------------|
 
 //--------------------------------------------------|
@@ -39,9 +40,7 @@ float tripDistance;
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(12, 6, NEO_RGB + NEO_KHZ800);
 
-long randNumber1;
-long randNumber2;
-long randNumber3;
+long distanceIntensity;
 
 boolean usingInterrupt = false;
 void useInterrupt(boolean);
@@ -166,194 +165,98 @@ void headingDirection(float heading)
 {
   if ((heading >= 345)||(heading < 15)) {
     Serial.println("  Top");
-    strip.setPixelColor(0, strip.Color(randNumber1,randNumber2,randNumber3));
-    strip.setPixelColor(1, strip.Color(0,0,0));
-    strip.setPixelColor(2, strip.Color(0,0,0));
-    strip.setPixelColor(3, strip.Color(0,0,0));
-    strip.setPixelColor(4, strip.Color(0,0,0));
-    strip.setPixelColor(5, strip.Color(0,0,0));
-    strip.setPixelColor(6, strip.Color(0,0,0));
-    strip.setPixelColor(7, strip.Color(0,0,0));
-    strip.setPixelColor(8, strip.Color(0,0,0));
-    strip.setPixelColor(9, strip.Color(0,0,0));
-    strip.setPixelColor(10, strip.Color(0,0,0));
-    strip.setPixelColor(11, strip.Color(0,0,0));
+    for (uint16_t i=0;i<strip.numPixels();i++) {
+      strip.setPixelColor(i, strip.Color(0,0,0));
+    }
+    strip.setPixelColor(0, strip.Color(0,distanceIntensity,0));
   }
   
   else if ((heading >= 15)&&(heading < 45)) {
     Serial.println(" Rightish");
-    strip.setPixelColor(1, strip.Color(randNumber1,randNumber2,randNumber3));
-    strip.setPixelColor(0, strip.Color(0,0,0));
-    strip.setPixelColor(2, strip.Color(0,0,0));
-    strip.setPixelColor(3, strip.Color(0,0,0));
-    strip.setPixelColor(4, strip.Color(0,0,0));
-    strip.setPixelColor(5, strip.Color(0,0,0));
-    strip.setPixelColor(6, strip.Color(0,0,0));
-    strip.setPixelColor(7, strip.Color(0,0,0));
-    strip.setPixelColor(8, strip.Color(0,0,0));
-    strip.setPixelColor(9, strip.Color(0,0,0));
-    strip.setPixelColor(10, strip.Color(0,0,0));
-    strip.setPixelColor(11, strip.Color(0,0,0));
+    for (uint16_t i=0;i<strip.numPixels();i++) {
+      strip.setPixelColor(i, strip.Color(0,0,0));
+    }
+    strip.setPixelColor(1, strip.Color((distanceIntensity*.25),distanceIntensity,0));
   }
   
   else if ((heading >= 45)&&(heading < 75)) {
     Serial.println("  Rightish");
-    strip.setPixelColor(2, strip.Color(randNumber1,randNumber2,randNumber3));
-    strip.setPixelColor(0, strip.Color(0,0,0));
-    strip.setPixelColor(1, strip.Color(0,0,0));
-    strip.setPixelColor(3, strip.Color(0,0,0));
-    strip.setPixelColor(4, strip.Color(0,0,0));
-    strip.setPixelColor(5, strip.Color(0,0,0));
-    strip.setPixelColor(6, strip.Color(0,0,0));
-    strip.setPixelColor(7, strip.Color(0,0,0));
-    strip.setPixelColor(8, strip.Color(0,0,0));
-    strip.setPixelColor(9, strip.Color(0,0,0));
-    strip.setPixelColor(10, strip.Color(0,0,0));
-    strip.setPixelColor(11, strip.Color(0,0,0));
+    for (uint16_t i=0;i<strip.numPixels();i++) {
+      strip.setPixelColor(i, strip.Color(0,0,0));
+    }
+    strip.setPixelColor(2, strip.Color((distanceIntensity*.75),distanceIntensity,0));
   }
   
   else if ((heading >= 75)&&(heading < 105)) {
     Serial.println(" Right");
-    strip.setPixelColor(3, strip.Color(randNumber1,randNumber2,randNumber3));
-    strip.setPixelColor(0, strip.Color(0,0,0));
-    strip.setPixelColor(1, strip.Color(0,0,0));
-    strip.setPixelColor(2, strip.Color(0,0,0));
-    strip.setPixelColor(4, strip.Color(0,0,0));
-    strip.setPixelColor(5, strip.Color(0,0,0));
-    strip.setPixelColor(6, strip.Color(0,0,0));
-    strip.setPixelColor(7, strip.Color(0,0,0));
-    strip.setPixelColor(8, strip.Color(0,0,0));
-    strip.setPixelColor(9, strip.Color(0,0,0));
-    strip.setPixelColor(10, strip.Color(0,0,0));
-    strip.setPixelColor(11, strip.Color(0,0,0));
+    for (uint16_t i=0;i<strip.numPixels();i++) {
+      strip.setPixelColor(i, strip.Color(0,0,0));
+    }
+    strip.setPixelColor(3, strip.Color(distanceIntensity,distanceIntensity,0));
   }
   
   else if ((heading >= 105)&&(heading < 135)) {
     Serial.println("  Back right");
-    strip.setPixelColor(4, strip.Color(randNumber1,randNumber2,randNumber3));
-    strip.setPixelColor(0, strip.Color(0,0,0));
-    strip.setPixelColor(1, strip.Color(0,0,0));
-    strip.setPixelColor(2, strip.Color(0,0,0));
-    strip.setPixelColor(3, strip.Color(0,0,0));
-    strip.setPixelColor(5, strip.Color(0,0,0));
-    strip.setPixelColor(6, strip.Color(0,0,0));
-    strip.setPixelColor(7, strip.Color(0,0,0));
-    strip.setPixelColor(8, strip.Color(0,0,0));
-    strip.setPixelColor(9, strip.Color(0,0,0));
-    strip.setPixelColor(10, strip.Color(0,0,0));
-    strip.setPixelColor(11, strip.Color(0,0,0));
+    for (uint16_t i=0;i<strip.numPixels();i++) {
+      strip.setPixelColor(i, strip.Color(0,0,0));
+    }
+    strip.setPixelColor(4, strip.Color(distanceIntensity,(distanceIntensity*.75),0));
   }
   
   else if ((heading >= 135)&&(heading < 165)) {
     Serial.println(" Back right");
-    strip.setPixelColor(5, strip.Color(randNumber1,randNumber2,randNumber3));
-    strip.setPixelColor(0, strip.Color(0,0,0));
-    strip.setPixelColor(1, strip.Color(0,0,0));
-    strip.setPixelColor(2, strip.Color(0,0,0));
-    strip.setPixelColor(3, strip.Color(0,0,0));
-    strip.setPixelColor(4, strip.Color(0,0,0));
-    strip.setPixelColor(6, strip.Color(0,0,0));
-    strip.setPixelColor(7, strip.Color(0,0,0));
-    strip.setPixelColor(8, strip.Color(0,0,0));
-    strip.setPixelColor(9, strip.Color(0,0,0));
-    strip.setPixelColor(10, strip.Color(0,0,0));
-    strip.setPixelColor(11, strip.Color(0,0,0));
+    for (uint16_t i=0;i<strip.numPixels();i++) {
+      strip.setPixelColor(i, strip.Color(0,0,0));
+    }
+    strip.setPixelColor(5, strip.Color(distanceIntensity,(distanceIntensity*.25),0));
   }
   
   else if ((heading >= 165)&&(heading < 195)) {
     Serial.println("  Turn around");
-    strip.setPixelColor(6, strip.Color(randNumber1,randNumber2,randNumber3));
-    strip.setPixelColor(0, strip.Color(0,0,0));
-    strip.setPixelColor(1, strip.Color(0,0,0));
-    strip.setPixelColor(2, strip.Color(0,0,0));
-    strip.setPixelColor(3, strip.Color(0,0,0));
-    strip.setPixelColor(4, strip.Color(0,0,0));
-    strip.setPixelColor(5, strip.Color(0,0,0));
-    strip.setPixelColor(7, strip.Color(0,0,0));
-    strip.setPixelColor(8, strip.Color(0,0,0));
-    strip.setPixelColor(9, strip.Color(0,0,0));
-    strip.setPixelColor(10, strip.Color(0,0,0));
-    strip.setPixelColor(11, strip.Color(0,0,0));
+    for (uint16_t i=0;i<strip.numPixels();i++) {
+      strip.setPixelColor(i, strip.Color(0,0,0));
+    }
+    strip.setPixelColor(6, strip.Color(distanceIntensity,0,0));
   }
   
   else if ((heading >= 195)&&(heading < 225)) {
     Serial.println(" Back left");
-    strip.setPixelColor(7, strip.Color(randNumber1,randNumber2,randNumber3));
-    strip.setPixelColor(0, strip.Color(0,0,0));
-    strip.setPixelColor(1, strip.Color(0,0,0));
-    strip.setPixelColor(2, strip.Color(0,0,0));
-    strip.setPixelColor(3, strip.Color(0,0,0));
-    strip.setPixelColor(4, strip.Color(0,0,0));
-    strip.setPixelColor(5, strip.Color(0,0,0));
-    strip.setPixelColor(6, strip.Color(0,0,0));
-    strip.setPixelColor(8, strip.Color(0,0,0));
-    strip.setPixelColor(9, strip.Color(0,0,0));
-    strip.setPixelColor(10, strip.Color(0,0,0));
-    strip.setPixelColor(11, strip.Color(0,0,0));
+    for (uint16_t i=0;i<strip.numPixels();i++) {
+      strip.setPixelColor(i, strip.Color(0,0,0));
+    }
+    strip.setPixelColor(7, strip.Color(distanceIntensity,(distanceIntensity*.25),0));
   }
   
   else if ((heading >= 225)&&(heading < 255)) {
     Serial.println(" Back left");
-    strip.setPixelColor(8, strip.Color(randNumber1,randNumber2,randNumber3));
-    strip.setPixelColor(0, strip.Color(0,0,0));
-    strip.setPixelColor(1, strip.Color(0,0,0));
-    strip.setPixelColor(2, strip.Color(0,0,0));
-    strip.setPixelColor(3, strip.Color(0,0,0));
-    strip.setPixelColor(4, strip.Color(0,0,0));
-    strip.setPixelColor(5, strip.Color(0,0,0));
-    strip.setPixelColor(6, strip.Color(0,0,0));
-    strip.setPixelColor(7, strip.Color(0,0,0));
-    strip.setPixelColor(9, strip.Color(0,0,0));
-    strip.setPixelColor(10, strip.Color(0,0,0));
-    strip.setPixelColor(11, strip.Color(0,0,0));
+    for (uint16_t i=0;i<strip.numPixels();i++) {
+      strip.setPixelColor(i, strip.Color(0,0,0));
+    }
+    strip.setPixelColor(8, strip.Color(distanceIntensity,(distanceIntensity*.75),0));
   }
   
   else if ((heading >= 255)&&(heading < 285)) {
     Serial.println(" Left");
-    strip.setPixelColor(9, strip.Color(randNumber1,randNumber2,randNumber3));
-    strip.setPixelColor(0, strip.Color(0,0,0));
-    strip.setPixelColor(1, strip.Color(0,0,0));
-    strip.setPixelColor(2, strip.Color(0,0,0));
-    strip.setPixelColor(3, strip.Color(0,0,0));
-    strip.setPixelColor(4, strip.Color(0,0,0));
-    strip.setPixelColor(5, strip.Color(0,0,0));
-    strip.setPixelColor(6, strip.Color(0,0,0));
-    strip.setPixelColor(7, strip.Color(0,0,0));
-    strip.setPixelColor(8, strip.Color(0,0,0));
-    strip.setPixelColor(10, strip.Color(0,0,0));
-    strip.setPixelColor(11, strip.Color(0,0,0));
+    for (uint16_t i=0;i<strip.numPixels();i++) {
+      strip.setPixelColor(i, strip.Color(0,0,0));
+    }
+    strip.setPixelColor(9, strip.Color(distanceIntensity,distanceIntensity,0));
   }
   
   else if ((heading >= 285)&&(heading < 315)) {
     Serial.println(" Leftish");
-    strip.setPixelColor(10, strip.Color(randNumber1,randNumber2,randNumber3));
-    strip.setPixelColor(0, strip.Color(0,0,0));
-    strip.setPixelColor(1, strip.Color(0,0,0));
-    strip.setPixelColor(2, strip.Color(0,0,0));
-    strip.setPixelColor(3, strip.Color(0,0,0));
-    strip.setPixelColor(4, strip.Color(0,0,0));
-    strip.setPixelColor(5, strip.Color(0,0,0));
-    strip.setPixelColor(6, strip.Color(0,0,0));
-    strip.setPixelColor(7, strip.Color(0,0,0));
-    strip.setPixelColor(8, strip.Color(0,0,0));
-    strip.setPixelColor(9, strip.Color(0,0,0));
-    strip.setPixelColor(11, strip.Color(0,0,0));
+    for (uint16_t i=0;i<strip.numPixels();i++) {
+      strip.setPixelColor(i, strip.Color(0,0,0));
+    }
+    strip.setPixelColor(10, strip.Color((distanceIntensity*.75),distanceIntensity,0));
   }
   
   else if ((heading >= 315)&&(heading < 345)) {
     Serial.println(" Leftish");
-    strip.setPixelColor(11, strip.Color(randNumber1,randNumber2,randNumber3));
-    strip.setPixelColor(0, strip.Color(0,0,0));
-    strip.setPixelColor(1, strip.Color(0,0,0));
-    strip.setPixelColor(2, strip.Color(0,0,0));
-    strip.setPixelColor(3, strip.Color(0,0,0));
-    strip.setPixelColor(4, strip.Color(0,0,0));
-    strip.setPixelColor(5, strip.Color(0,0,0));
-    strip.setPixelColor(6, strip.Color(0,0,0));
-    strip.setPixelColor(7, strip.Color(0,0,0));
-    strip.setPixelColor(8, strip.Color(0,0,0));
-    strip.setPixelColor(9, strip.Color(0,0,0));
-    strip.setPixelColor(10, strip.Color(0,0,0));
+    for (uint16_t i=0;i<strip.numPixels();i++) {
+      strip.setPixelColor(i, strip.Color(0,0,0));
+    }
+    strip.setPixelColor(11, strip.Color((distanceIntensity*.25),distanceIntensity,0));
   }
   strip.show();
 }
@@ -365,33 +268,23 @@ void headingDistance(float fDist)
 
   if ((fDist < DESTINATION_DISTANCE)) { 
     Serial.println("Arrived at destination!");
-    randNumber1=4;
-    randNumber2=0;
-    randNumber3=0;
+      distanceIntensity=25;
   }
   
   if ((fDist > DESTINATION_DISTANCE && fDist <= 250)) {
-    randNumber1=4;
-    randNumber2=4;
-    randNumber3=1;
+      distanceIntensity=20;
   }
   
   if ((fDist > 250 && fDist <= 1000)) {
-    randNumber1=0;
-    randNumber2=0;
-    randNumber3=4;
+      distanceIntensity=15;
   }
   
   if ((fDist > 1000 && fDist <= 5000)) {
-    randNumber1=4;
-    randNumber2=4;
-    randNumber3=4;
+      distanceIntensity=10;
   }
   
   if ((fDist > 5000)) {
-    randNumber1=0;
-    randNumber2=4;
-    randNumber3=0;
+      distanceIntensity=5;
   }
 }
 
