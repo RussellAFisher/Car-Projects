@@ -34,6 +34,7 @@ float targetLat = GEO_LAT;
 float targetLon = GEO_LON;
 
 float distanceTil = 0;
+float counter=0;
 
 // Trip distance
 float tripDistance;
@@ -168,7 +169,7 @@ void headingDirection(float heading)
     for (uint16_t i=0;i<strip.numPixels();i++) {
       strip.setPixelColor(i, strip.Color(0,0,0));
     }
-    strip.setPixelColor(0, strip.Color(0,distanceIntensity,0));
+    strip.setPixelColor(0, strip.Color(distanceIntensity,0,0));
   }
   
   else if ((heading >= 15)&&(heading < 45)) {
@@ -176,7 +177,7 @@ void headingDirection(float heading)
     for (uint16_t i=0;i<strip.numPixels();i++) {
       strip.setPixelColor(i, strip.Color(0,0,0));
     }
-    strip.setPixelColor(1, strip.Color((distanceIntensity*.25),distanceIntensity,0));
+    strip.setPixelColor(1, strip.Color(distanceIntensity,(distanceIntensity*.25),0));
   }
   
   else if ((heading >= 45)&&(heading < 75)) {
@@ -184,7 +185,7 @@ void headingDirection(float heading)
     for (uint16_t i=0;i<strip.numPixels();i++) {
       strip.setPixelColor(i, strip.Color(0,0,0));
     }
-    strip.setPixelColor(2, strip.Color((distanceIntensity*.75),distanceIntensity,0));
+    strip.setPixelColor(2, strip.Color(distanceIntensity,(distanceIntensity*.75),0));
   }
   
   else if ((heading >= 75)&&(heading < 105)) {
@@ -200,7 +201,7 @@ void headingDirection(float heading)
     for (uint16_t i=0;i<strip.numPixels();i++) {
       strip.setPixelColor(i, strip.Color(0,0,0));
     }
-    strip.setPixelColor(4, strip.Color(distanceIntensity,(distanceIntensity*.75),0));
+    strip.setPixelColor(4, strip.Color((distanceIntensity*.75),distanceIntensity,0));
   }
   
   else if ((heading >= 135)&&(heading < 165)) {
@@ -208,7 +209,7 @@ void headingDirection(float heading)
     for (uint16_t i=0;i<strip.numPixels();i++) {
       strip.setPixelColor(i, strip.Color(0,0,0));
     }
-    strip.setPixelColor(5, strip.Color(distanceIntensity,(distanceIntensity*.25),0));
+    strip.setPixelColor(5, strip.Color((distanceIntensity*.25),distanceIntensity,0));
   }
   
   else if ((heading >= 165)&&(heading < 195)) {
@@ -216,7 +217,7 @@ void headingDirection(float heading)
     for (uint16_t i=0;i<strip.numPixels();i++) {
       strip.setPixelColor(i, strip.Color(0,0,0));
     }
-    strip.setPixelColor(6, strip.Color(distanceIntensity,0,0));
+    strip.setPixelColor(6, strip.Color(0,distanceIntensity,0));
   }
   
   else if ((heading >= 195)&&(heading < 225)) {
@@ -224,7 +225,7 @@ void headingDirection(float heading)
     for (uint16_t i=0;i<strip.numPixels();i++) {
       strip.setPixelColor(i, strip.Color(0,0,0));
     }
-    strip.setPixelColor(7, strip.Color(distanceIntensity,(distanceIntensity*.25),0));
+    strip.setPixelColor(7, strip.Color((distanceIntensity*.25),distanceIntensity,0));
   }
   
   else if ((heading >= 225)&&(heading < 255)) {
@@ -232,7 +233,7 @@ void headingDirection(float heading)
     for (uint16_t i=0;i<strip.numPixels();i++) {
       strip.setPixelColor(i, strip.Color(0,0,0));
     }
-    strip.setPixelColor(8, strip.Color(distanceIntensity,(distanceIntensity*.75),0));
+    strip.setPixelColor(8, strip.Color((distanceIntensity*.75),distanceIntensity,0));
   }
   
   else if ((heading >= 255)&&(heading < 285)) {
@@ -248,7 +249,7 @@ void headingDirection(float heading)
     for (uint16_t i=0;i<strip.numPixels();i++) {
       strip.setPixelColor(i, strip.Color(0,0,0));
     }
-    strip.setPixelColor(10, strip.Color((distanceIntensity*.75),distanceIntensity,0));
+    strip.setPixelColor(10, strip.Color(distanceIntensity,(distanceIntensity*.75),0));
   }
   
   else if ((heading >= 315)&&(heading < 345)) {
@@ -256,7 +257,7 @@ void headingDirection(float heading)
     for (uint16_t i=0;i<strip.numPixels();i++) {
       strip.setPixelColor(i, strip.Color(0,0,0));
     }
-    strip.setPixelColor(11, strip.Color((distanceIntensity*.25),distanceIntensity,0));
+    strip.setPixelColor(11, strip.Color(distanceIntensity,(distanceIntensity*.25),0));
   }
   strip.show();
 }
