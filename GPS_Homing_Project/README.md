@@ -1,4 +1,4 @@
-#Arduino GPS Compass
+#Arduino GPS Homing Device
 
 This is an adaptation of a Adafruit project https://learn.adafruit.com/flora-gps-jacket/wear-it?view=all
 
